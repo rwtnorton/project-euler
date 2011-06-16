@@ -23,21 +23,21 @@ end
 DIGITS = (ARGV[0] || 3).to_i
 
 # Brute force approach: generate all unique combinations (independent
-# of tuple order), reverse sort by the sum of the tuple, and
-# select the first tuple whose product is a palindrome.
+# of pair order), reverse sort by the sum of the pair, and
+# select the first pair whose product is a palindrome.
 terms = (10**(DIGITS-1) .. (10**DIGITS-1)).to_a
 term_pairs = terms.combination(2).to_a + terms.map {|x| [x, x] }
 analysis = term_pairs.map  {|x|    [x, x[0] + x[1]] }
                      .sort {|a, b| b[1] <=> a[1] }
 
 analysis.each do |x|
-  tuple, sum = x
-  product = tuple[0] * tuple[1]
+  pair, sum = x
+  product = pair[0] * pair[1]
   is_palindrome = product.palindrome?
-#p [tuple, sum, product, is_palindrome]
+#p [pair, sum, product, is_palindrome]
   if is_palindrome
     puts
-    puts "#{tuple}: #{product}"
+    puts "#{pair}: #{product}"
     break
   end
 end
